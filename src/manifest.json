@@ -1,0 +1,13 @@
+{
+  "name": "SaluteOnline",
+  "short_name": "SaluteOnline",
+  "start_url": "index.html",
+  "display": "standalone",
+  "icons": [{
+    "src": "assets/so-logo.png",
+    "sizes": "256x315",
+    "type": "image/png"
+  }],
+  "background_color": "#488aff",
+  "theme_color": "#488aff"
+}
