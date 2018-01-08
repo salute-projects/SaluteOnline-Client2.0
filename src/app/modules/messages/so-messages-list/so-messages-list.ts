@@ -1,18 +1,20 @@
 ﻿import { Component, ViewEncapsulation } from "@angular/core";
-import { Context } from "../../services/context/context";
-import { InnerMessageDto, InnerMessagesFilter, EntityType, MessageStatus, Page } from "../../dto/dto";
-import { SoSnackService } from "../../services/snack.service";
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { systemAvatar } from "../../configuration/constants";
+import { Page } from "../../../dto/common";
+import { SoSnackService } from "../../../services/snack.service";
+import { Context } from "../../../services/context/context";
+import { systemAvatar } from "../../../configuration/constants";
+import { InnerMessageDto, InnerMessagesFilter } from "../../../dto/innerMessage/index";
+import { MessageStatus, EntityType } from "../../../dto/enums";
 
 @Component({
     selector: "so-messages",
-    styleUrls: ["./so-messages.scss"],
-    templateUrl: "./so-messages.html",
+    styleUrls: ["./so-messages-list.scss"],
+    templateUrl: "./so-messages-list.html",
     encapsulation: ViewEncapsulation.None
 })
 
-export class SoMessages {
+export class SoMessagesList {
     messages = new Page<InnerMessageDto>();
 
     constructor(private readonly context: Context, private readonly snackService: SoSnackService, private readonly sanitizer: DomSanitizer) {

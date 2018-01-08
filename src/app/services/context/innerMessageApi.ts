@@ -2,7 +2,8 @@
 import { HttpClient } from '@angular/common/http';
 import { apiSettings } from "../../configuration/constants";
 import { Observable } from 'rxjs';
-import { InnerMessagesFilter, InnerMessageDto, Page } from "../../dto/dto";
+import { InnerMessagesFilter, InnerMessageDto } from "../../dto/innerMessage/index";
+import { Page } from "../../dto/common/index";
 
 @Injectable()
 export class InnerMessageApi {

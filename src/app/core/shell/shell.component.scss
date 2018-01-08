@@ -1,0 +1,15 @@
+.shell-container {
+    display: flex;
+    min-height: 100vh;
+    padding-left: 0;
+    padding-right: 0;
+
+    main {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0%;
+    }
+}

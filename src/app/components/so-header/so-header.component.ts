@@ -6,8 +6,9 @@ import { Context } from "../../services/context/context";
 import { MatDialog, MatDialogConfig} from "@angular/material";
 import { LoginDialog } from "../so-login-dialog/so-login-dialog";
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { InnerMessagesFilter, InnerMessageDto, EntityType, MessageStatus } from "../../dto/innerMessage";
 import { systemAvatar } from "../../configuration/constants";
+import { InnerMessageDto, InnerMessagesFilter } from "../../dto/innerMessage/index";
+import { MessageStatus, EntityType } from "../../dto/enums";
 
 @Component({
     selector: "so-header",
@@ -26,7 +27,6 @@ export class SoHeader {
 
     constructor(private readonly state: GlobalState, private readonly router: Router, private readonly authService: AuthService, public loginDialog: MatDialog,
         private readonly sanitizer: DomSanitizer, private readonly context: Context ) {
-        debugger;
         this.logged = this.authService.isAuthenticated();
         this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(localStorage.getItem('avatar') || '');
         this.state.subscribe(this.state.events.menu.isCollapsed, (isCollapsed: boolean) => {
@@ -74,7 +74,7 @@ export class SoHeader {
     }
 
     gotoUserProfile() {
-        this.router.navigateByUrl('/so-user-profile');
+        this.router.navigateByUrl('/profile');
     }
 
     getAvatar(avatar: string) {

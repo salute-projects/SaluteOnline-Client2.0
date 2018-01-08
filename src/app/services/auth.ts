@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { GlobalState } from "../services/global.state";
-import { LoginResultDto, SignUpResultDto } from "../dto/dto";
 import { Observable, Observer } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { apiSettings } from "../configuration/constants";
+import { LoginResultDto, SignUpResultDto } from "../dto/user/index";
 
 @Injectable()
 export class AuthService {

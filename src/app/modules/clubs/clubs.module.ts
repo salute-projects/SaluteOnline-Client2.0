@@ -8,6 +8,7 @@ import { SoClubsList } from './so-clubs-list/so-clubs-list.component';
 import { AddClubMemberDialog } from './so-add-club-member/so-add-club-member';
 import { CreateClubDialog } from './so-create-club-dialog/so-create-club-dialog';
 import { SharedModule } from "../../shared/shared.module";
+import { MembershipRequestDialog } from '../../components/so-membership-request-dialog/so-membership-request-dialog';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { SharedModule } from "../../shared/shared.module";
     SoClubsEdit,
     SoClubsList,
     AddClubMemberDialog,
-    CreateClubDialog
-  ]
+    CreateClubDialog,
+  ],
+  entryComponents: [MembershipRequestDialog, CreateClubDialog, AddClubMemberDialog]
 })
 export class ClubsModule { }

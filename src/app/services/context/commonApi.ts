@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { apiSettings } from "../../configuration/constants";
 import { AuthService } from "../../services/auth";
 import { Observable, Observer } from 'rxjs';
-import { Country } from "../../dto/dto";
+import { Country } from "../../dto/common/index";
 
 @Injectable()
 export class CommonApi {

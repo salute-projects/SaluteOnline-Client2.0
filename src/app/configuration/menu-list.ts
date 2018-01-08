@@ -59,7 +59,7 @@
         ]
     },
     {
-        path: 'so-messages',
+        path: 'messages',
         data: {
             menu: {
                 title: 'Messages',

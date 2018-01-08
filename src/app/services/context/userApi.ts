@@ -2,7 +2,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { apiSettings } from "../../configuration/constants";
 import { Observable, Observer } from 'rxjs';
-import { UserDto, UserMainInfoDto, UserPersonalInfoDto } from "../../dto/dto";
+import { UserDto, UserMainInfoDto, UserPersonalInfoDto } from "../../dto/user/index";
 
 @Injectable()
 export class UserApi {

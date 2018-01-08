@@ -6,7 +6,7 @@ import { SoSnackService } from "../../../services/snack.service";
 import { Country } from "../../../dto/common";
 import { Context } from "../../../services/context/context";
 import { Helpers } from "../../../services/helpers";
-import { CreateClubDto } from "../../../dto/club";
+import { CreateClubDto } from "../../../dto/clubs/index";
 
 @Component({
     selector: "so-create-club-dialog",

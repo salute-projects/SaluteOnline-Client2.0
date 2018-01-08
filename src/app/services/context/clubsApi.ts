@@ -2,8 +2,8 @@
 import { HttpClient } from '@angular/common/http';
 import { apiSettings } from "../../configuration/constants";
 import { Observable } from 'rxjs';
-import { CreateClubDto, ClubFilter, Page, ClubDto, ClubSummaryDto, ClubInfoAggregation, ClubMemberFilter, ClubMemberSummary, CreateClubMemberDto,
-    MembershipRequestCreateDto, MembershipRequestDto, EntityFilter, HandleMembershipRequestDto, MembershipRequestFilter } from "../../dto/dto";
+import { CreateClubDto, ClubFilter, ClubSummaryDto, ClubInfoAggregation, ClubDto, ClubMemberSummary, ClubMemberFilter, CreateClubMemberDto, MembershipRequestCreateDto, MembershipRequestFilter, MembershipRequestDto, HandleMembershipRequestDto } from "../../dto/clubs/index";
+import { Page } from "../../dto/common/index";
 
 @Injectable()
 export class ClubsApi {

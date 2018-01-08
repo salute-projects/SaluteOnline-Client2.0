@@ -1,13 +1,13 @@
 ﻿<section class="so-clubs-list container-fluid">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 offset-md-1">
             <div class="button-row">
                 <button mat-raised-button class="large-button" color="primary" (click)="createClub()">REGISTER NEW</button>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8 offset-md-1">
             <br/>
             <mat-grid-list cols="2" rowHeight="240px" gutterSize="10px" class="so-clubs-list-container">
                 <mat-grid-tile *ngFor="let club of clubs.items">
@@ -25,7 +25,7 @@
                             </p>
                         </mat-card-content>
                         <mat-card-actions>
-                            <button mat-button color="primary">DETAILS</button>
+                            <button mat-button>DETAILS</button>
                             <button mat-button (click)="sendMembershipRequest(club.id)">MEMBERSHIP REQUEST</button>
                             <button *ngIf="club.canBeEdited" mat-button (click)="edit(club.id)">EDIT</button>
                         </mat-card-actions>

@@ -6,11 +6,12 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DataSource } from '@angular/cdk/collections';
 import { AddClubMemberDialog } from "../so-add-club-member/so-add-club-member";
 import { Country, Page } from "../../../dto/common";
-import { ClubDto, ClubMemberSummary, ClubMemberFilter, MembershipRequestDto, MembershipRequestFilter, HandleMembershipRequestDto, MembershipRequestStatus } from "../../../dto/club";
 import { Context } from "../../../services/context/context";
 import { SoSnackService } from "../../../services/snack.service";
 import { GlobalState } from "../../../services/global.state";
 import { CustomDataSource } from "../../../services/datatable.service";
+import { ClubDto, ClubMemberSummary, ClubMemberFilter, MembershipRequestDto, MembershipRequestFilter, HandleMembershipRequestDto } from "../../../dto/clubs/index";
+import { MembershipRequestStatus } from "../../../dto/enums";
 
 @Component({
     selector: 'so-clubs-edit',

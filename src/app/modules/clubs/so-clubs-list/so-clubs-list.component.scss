@@ -9,6 +9,7 @@
     .so-clubs-list-container {
         .club-card {
             width: 100%;
+            padding: 0;
 
             .mat-card-avatar {
                 height: 64px;
@@ -22,9 +23,13 @@
 
             .mat-card-content {
                 height: 60px;
+                padding: 24px;
             }
 
             .mat-card-header {
+                padding: 24px;
+                padding-bottom: 0;
+
                 .mat-card-title {
                     font-size: 24px;
                     margin-bottom: 8px;
@@ -32,9 +37,12 @@
             }
 
             .mat-card-actions {
-                .mat-button-wrapper {
-                    font-weight: bold;
-                }
+                background: #3f51b5;
+                color: white;
+                margin-bottom: 0;
+                margin-left: 0;
+                margin-right: 0;
+                padding: 8px 8px;
             }
         }
     }

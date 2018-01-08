@@ -4,11 +4,13 @@ import { GlobalState } from "../../services/global.state";
 import { SoSnackService } from "../../services/snack.service";
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from "@angular/material";
-import { ClubMemberSummary, ClubMemberFilter, UserDto, Page, MembershipRequestCreateDto } from "../../dto/dto";
 import { Helpers } from "../../services/helpers";
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from "rxjs/observable/forkJoin"
 import { AtLeastOneValidation } from "../../services/validators";
+import { ClubMemberSummary, ClubMemberFilter, MembershipRequestCreateDto } from "../../dto/clubs/index";
+import { UserDto } from "../../dto/user/index";
+import { Page } from "../../dto/common/index";
 
 @Component({
     selector: "so-membership-request-dialog",

@@ -12,7 +12,7 @@
                             {{message.senderName}} at {{message.created | amCalendar}}
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-                    <div class="mesage-item-container">
+                    <div class="mesage-item-container row no-gutters">
                         <div class="col-md-2 no-gutters no-padding">
                             <img height="64" [src]="getAvatar(message.avatar)" alt="logo" />
                         </div>
@@ -21,7 +21,7 @@
                         </div>
                         <br/>
                     </div>
-                    <mat-action-row>
+                    <mat-action-row class="message-actions-row">
                         <button mat-button>DELETE</button>
                         <button mat-button>REPLY</button>
                     </mat-action-row>

@@ -1,5 +1,5 @@
-﻿@import "../../../theme/theme-variables";
-@import "../../../theme/mixins";
+﻿@import "../../../../theme/theme-variables";
+@import "../../../../theme/mixins";
 
 .so-messages {
     top: $header-height;
@@ -23,6 +23,12 @@
                 padding: 8px;
                 margin-bottom: 12px;
             }
+        }
+
+        .message-actions-row {
+            background: $main-red-hover;
+            color: $main-white;
+            padding: 8px 8px 8px 24px;
         }
     }
 }

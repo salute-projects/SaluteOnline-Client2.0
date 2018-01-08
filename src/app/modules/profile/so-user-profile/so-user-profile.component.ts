@@ -1,10 +1,11 @@
 ﻿import { Component, ViewEncapsulation } from "@angular/core";
-import { Context } from "../../services/context/context";
-import { GlobalState } from "../../services/global.state";
-import { UserDto, UserMainInfoDto, UserPersonalInfoDto, Country } from "../../dto/dto";
-import { SoSnackService } from "../../services/snack.service";
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
+import { Country } from "../../../dto/common/index";
+import { UserDto, UserMainInfoDto, UserPersonalInfoDto } from "../../../dto/user/index";
+import { SoSnackService } from "../../../services/snack.service";
+import { Context } from "../../../services/context/context";
+import { GlobalState } from "../../../services/global.state";
 
 @Component({
     selector: 'so-user-profile',
@@ -34,14 +35,15 @@ export class SoUserProfile {
         });
         this.context.commonApi.getCountries().subscribe(result => {
             this.allCountries = result;
-            this.filteredCountries = this.countryCtrl.valueChanges.startWith(null)
-                .map((country: string) => country ? this.filterCountries(country) : this.allCountries.slice());
+            this.countryCtrl.valueChanges.subscribe(x => {
+                this.filteredCountries = Observable.of(x ? this.filterCountries(x) : this.allCountries.slice());
+            })
         }, () => {
             this.filteredCountries = Observable.from([]);
         });
     }
 
-    private filterCountries(country: string) {
+    private filterCountries(country: string) : Country[] {
         return this.allCountries.filter(state => state.name.toLowerCase().indexOf(country.toLowerCase()) === 0);
     }
 

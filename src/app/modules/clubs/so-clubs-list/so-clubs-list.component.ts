@@ -4,12 +4,12 @@ import { Observable } from 'rxjs/Observable';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { CreateClubDialog } from "../so-create-club-dialog/so-create-club-dialog";
 import { TreeNode } from 'primeng/primeng';
-import { ClubInfoAggregation, ClubFilter, ClubSummaryDto } from "../../../dto/club";
 import { Page } from "../../../dto/common";
 import { Context } from "../../../services/context/context";
 import { SoSnackService } from "../../../services/snack.service";
 import { GlobalState } from "../../../services/global.state";
 import { MembershipRequestDialog } from "../../../components/so-membership-request-dialog/so-membership-request-dialog";
+import { ClubInfoAggregation, ClubFilter, ClubSummaryDto } from "../../../dto/clubs/index";
 
 @Component({
     selector: 'so-clubs-list',
@@ -27,7 +27,6 @@ export class SoClubsList {
 
     constructor(private readonly context: Context, private readonly snackService: SoSnackService, private readonly state: GlobalState,
         private readonly loginDialog: MatDialog, private readonly router: Router) {
-            debugger;
         this.clubs = new Page<ClubSummaryDto>();
         this.clubsFilter = new ClubFilter();
         this.refreshClubsList();
@@ -101,7 +100,7 @@ export class SoClubsList {
     }
 
     edit(id: number) {
-        this.router.navigate(['so-club-edit', id]);
+        this.router.navigate(['clubs', id]);
     }
 
     sendMembershipRequest(id: number) {

@@ -1,11 +1,12 @@
 ﻿import { Component, ViewEncapsulation } from "@angular/core";
 import { Context } from "../../services/context/context";
 import { SoSnackService } from "../../services/snack.service";
-import { ClubSummaryDto, ServiceProps, Protocol, PlayerEntry, Roles, Role } from "../../dto/dto";
 import { ActivatedRoute } from "@angular/router";
 import { DataSource } from '@angular/cdk/collections';
 import { CustomDataSource } from "../../services/datatable.service";
 import { Observable } from 'rxjs/Observable';
+import { ClubSummaryDto } from "../../dto/clubs/index";
+import { ServiceProps, Protocol, PlayerEntry } from "../../dto/protocol/index";
 
 @Component({
     selector: 'so-protocol',

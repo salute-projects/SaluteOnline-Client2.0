@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { SoSnackService } from "../../../services/snack.service";
 import { Context } from "../../../services/context/context";
 import { Helpers } from "../../../services/helpers";
-import { CreateClubMemberDto } from "../../../dto/club";
+import { CreateClubMemberDto } from "../../../dto/clubs/index";
 
 @Component({
     selector: "so-add-club-member",

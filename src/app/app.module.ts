@@ -15,15 +15,15 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from "./shared/shared.module";
 import { ClubsModule } from "./modules/clubs/clubs.module";
+import { MessagesModule } from "./modules/messages/messages.module";
+import { ProfileModule } from './modules/profile/profile.module';
 
 // components
 
 import { AppComponent } from './app.component';
 
 import { LoginDialog } from './components/so-login-dialog/so-login-dialog';
-import { SoUserProfile } from './components/so-user-profile/so-user-profile.component';
 import { MembershipRequestDialog } from './components/so-membership-request-dialog/so-membership-request-dialog';
-import { SoMessages } from './components/so-messages/so-messages';
 import { SoProtocol } from './components/so-protocol/so-protocol';
 
 
@@ -56,6 +56,8 @@ import { MATERIAL_SANITY_CHECKS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MAT_D
     CoreModule,
     SharedModule,
     ClubsModule,
+    MessagesModule,
+    ProfileModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule
@@ -63,9 +65,7 @@ import { MATERIAL_SANITY_CHECKS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MAT_D
   declarations: [
     AppComponent,
     LoginDialog,
-    SoUserProfile,
     MembershipRequestDialog,
-    SoMessages,
     SoProtocol
   ],
   providers: [

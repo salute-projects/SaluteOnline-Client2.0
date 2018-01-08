@@ -1,7 +1,9 @@
 <header>
     <so-header></so-header>
 </header>
-<div class="container-fluid" [class.menu-collapsed] = "isMenuCollapsed">
+<div class="container-fluid shell-container" [class.menu-collapsed] = "isMenuCollapsed">
     <so-sidebar></so-sidebar>
-    <router-outlet></router-outlet>
+    <main>
+        <router-outlet></router-outlet>
+    </main>>
 </div>
