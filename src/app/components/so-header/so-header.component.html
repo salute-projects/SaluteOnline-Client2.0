@@ -22,16 +22,16 @@
                 <div class="messages-popup-header m-t-20 m-b-16 text-center">
                     <h4>LATEST MESSAGES</h4>
                 </div>
-                <div class="messages-popup-item row no-gutters no-padding" *ngFor="let message of messages | slice:0:5; let i = index">
+                <div class="messages-popup-item row no-gutters no-padding" *ngFor="let message of messages; let i = index">
                     <div class="mesage-item-container no-gutters row">
-                        <div class="col-md-2 no-gutters no-padding">
+                        <div class="col-md-3 no-gutters no-padding">
                             <img height="36" [src]="getAvatar(message.avatar)" alt="logo" />
                         </div>
-                        <div class="col-md-10 font-08 no-gutters no-padding">
-                            <span>{{message.body | trancate : 70}}</span>
+                        <div class="col-md-9 font-08 no-gutters no-padding">
+                            <span>{{message.message | trancate : 70}}</span>
                         </div>
                         <div class="col-md-12 text-right font-07">
-                            {{message.created | amCalendar}}
+                            {{message.sent | amCalendar}}
                         </div>
                     </div>
                 </div>

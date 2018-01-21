@@ -105,6 +105,14 @@ a.disabled {
     font-size: 1em;
 }
 
+.font-12 {
+    font-size: 1.2em;
+}
+
+.font-14 {
+    font-size: 1.4em;
+}
+
 .no-padding {
     padding: 0;
 }
@@ -115,4 +123,8 @@ a.disabled {
 
 .center-vertical {
     vertical-align: middle;
+}
+
+.b-r-grey {
+    border-right: 1px solid #d3d3d3;
 }

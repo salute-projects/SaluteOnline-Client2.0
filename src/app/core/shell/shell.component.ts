@@ -3,6 +3,7 @@ import { GlobalState } from '../../services/global.state';
 import { AuthService } from '../../services/auth';
 import { HubConnection, HttpClient } from "@aspnet/signalr-client";
 import { resetFakeAsyncZone } from '@angular/core/testing';
+import { HubService } from '../../services/hub.service';
 
 @Component({
   selector: 'app-shell',
@@ -10,39 +11,30 @@ import { resetFakeAsyncZone } from '@angular/core/testing';
   styleUrls: ['./shell.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ShellComponent implements OnInit {
+export class ShellComponent {
 
   private hubConnection: HubConnection;
 
   isMenuCollapsed = false;
 
-  constructor(private readonly state: GlobalState, private readonly auth: AuthService) {
-    this.state.subscribe('menu.isCollapsed', (isCollapsed: boolean) => {
+  constructor(private readonly state: GlobalState, private readonly auth: AuthService, private readonly hub: HubService) {
+    this.state.subscribe(this.state.events.menu.isCollapsed, (isCollapsed: boolean) => {
       this.isMenuCollapsed = isCollapsed;
     });
     if (this.auth.isAuthenticated()) {
       var token = this.auth.tryGetToken();
-      this.hubConnection = new HubConnection("http://localhost:5134/soMessageHub?Bearer=" + token.replace('Bearer ', ''));
-      this.startHub();
+      this.hub.start(token);
     } else {
       this.auth.refreshToken().subscribe(result => {
         if (result.token) {
-          this.hubConnection = new HubConnection("http://localhost:5134/soMessageHub?Bearer=" + result.token);
-          this.startHub();
+          this.hub.start(result.token);
         }
       })
     }
   }
 
-  private startHub(): void {
-    this.hubConnection.start().then(() => {
-      this.hubConnection.on('newMessage', (message: string, sent: Date) => {
-        debugger;
-      });
-    });
-  }
-
-  ngOnInit() { 
+  private getLeftMargin() {
+    return this.isMenuCollapsed ? '52px' : '180px';
   }
 
 }

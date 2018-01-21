@@ -10,7 +10,7 @@ import { SoMessagesList } from './so-messages-list/so-messages-list';
   imports: [
     CommonModule,
     TranslateModule,
-    SharedModule,
+    SharedModule.forRoot(),
     MessagesRoutingModule
   ],
   declarations: [

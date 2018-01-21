@@ -52,7 +52,7 @@ export class SoClubsEdit {
     //#endregion
 
     constructor(private readonly context: Context, private readonly snackService: SoSnackService, private readonly state: GlobalState,
-        private readonly addMemberDialog: MatDialog, private readonly route: ActivatedRoute, ) {
+        private readonly addMemberDialog: MatDialog, private readonly route: ActivatedRoute) {
         this.clubInfo = new ClubDto();
         this.route.params.subscribe(params => {
             this.id = +params['id'];

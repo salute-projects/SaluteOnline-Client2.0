@@ -4,8 +4,10 @@ import { Page } from "../../../dto/common";
 import { SoSnackService } from "../../../services/snack.service";
 import { Context } from "../../../services/context/context";
 import { systemAvatar } from "../../../configuration/constants";
-import { InnerMessageDto, InnerMessagesFilter } from "../../../dto/innerMessage/index";
 import { MessageStatus, EntityType } from "../../../dto/enums";
+import { resetFakeAsyncZone } from "@angular/core/testing";
+import { ChatDto, ChatMessageDto } from "../../../dto/chat/index";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
     selector: "so-messages",
@@ -15,14 +17,30 @@ import { MessageStatus, EntityType } from "../../../dto/enums";
 })
 
 export class SoMessagesList {
-    messages = new Page<InnerMessageDto>();
+    guid: string;
+    chats = new Array<ChatDto>();
+    messages = new Page<ChatMessageDto>();
 
-    constructor(private readonly context: Context, private readonly snackService: SoSnackService, private readonly sanitizer: DomSanitizer) {
-        const filter = new InnerMessagesFilter(EntityType.User, null, MessageStatus.Pending);
-        this.context.innerMessageApi.getMessages(filter).subscribe(result => {
-            this.messages = result;
-        }, error => {
-            this.snackService.showError(error.error, 'OK');
+    constructor(private readonly context: Context, private readonly snackService: SoSnackService, private readonly sanitizer: DomSanitizer, 
+        private readonly route: ActivatedRoute, private readonly router: Router) {
+
+        this.route.params.subscribe(params => {
+            this.guid = params['guid'];
+            this.context.chatApi.getChats().subscribe(result => {
+                this.chats = result;
+                if (result.length > 0 && !this.guid) {
+                    this.router.navigateByUrl('/messages/' + result[0].guid)
+                } else {
+                    this.context.chatApi.getChatMessages(this.guid, 0, 25).subscribe(res => {
+                        this.messages = res;
+                    }, error => {
+                        this.snackService.showError(error.error, 'OK');
+                    })
+                }
+            }, error => {
+                this.snackService.showError(error.error, 'OK');
+            })
+            
         });
     }
 

@@ -3,7 +3,7 @@
 </header>
 <div class="container-fluid shell-container" [class.menu-collapsed] = "isMenuCollapsed">
     <so-sidebar></so-sidebar>
-    <main>
+    <main [ngStyle]="{ 'margin-left': getLeftMargin() }">
         <router-outlet></router-outlet>
     </main>>
 </div>

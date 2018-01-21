@@ -47,7 +47,7 @@ export class GlobalState {
 
     events = {
         global: {
-            logged: "global.logged"   
+            logged: 'global.logged'   
         },
         menu: {
             isCollapsed: "menu.isCollapsed",

@@ -2,7 +2,7 @@
 import { UserApi } from "./userApi";
 import { CommonApi } from "./commonApi";
 import { ClubsApi } from "./clubsApi";
-import { InnerMessageApi } from "./innerMessageApi";
+import { ChatApi } from "./chatApi";
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from "../../services/auth";
 
@@ -11,12 +11,12 @@ export class Context {
     userApi: UserApi;
     commonApi: CommonApi;
     clubsApi: ClubsApi;
-    innerMessageApi: InnerMessageApi;
+    chatApi: ChatApi;
 
-    constructor(private readonly userApiWrapper: UserApi, private readonly commonApiWrapper: CommonApi, private readonly clubsApiWrapper: ClubsApi, private readonly innerMessageApiWrapper: InnerMessageApi) {
+    constructor(private readonly userApiWrapper: UserApi, private readonly commonApiWrapper: CommonApi, private readonly clubsApiWrapper: ClubsApi, private readonly chatApiWrapper: ChatApi) {
         this.userApi = userApiWrapper;
         this.commonApi = commonApiWrapper;
         this.clubsApi = clubsApiWrapper;
-        this.innerMessageApi = innerMessageApiWrapper;
+        this.chatApi = chatApiWrapper;
     }
 }

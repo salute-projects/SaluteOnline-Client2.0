@@ -19,7 +19,7 @@ export class SoSidebar implements AfterViewInit, OnInit {
     menuHeight: number;
 
     constructor(private readonly elementRef: ElementRef, private readonly state: GlobalState) {
-        this.state.subscribe('menu.isCollapsed', (isCollapsed: boolean) => {
+        this.state.subscribe(this.state.events.menu.isCollapsed, (isCollapsed: boolean) => {
             this.isMenuCollapsed = isCollapsed;
         });
     }

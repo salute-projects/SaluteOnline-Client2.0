@@ -4,7 +4,8 @@
 }
 
 export const apiSettings = {
-    baseUrl: 'http://localhost:5134/api/'
+    baseUrl: 'http://localhost:5134/api/',
+    messageHub: 'http://localhost:5134/soMessageHub'
 }
 
 export const systemAvatar =

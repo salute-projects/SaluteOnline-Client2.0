@@ -30,17 +30,18 @@ import { SoProtocol } from './components/so-protocol/so-protocol';
 // service
 
 import { AppRoutingModule } from './app-routing.module';
-import { GlobalState } from "./services/global.state";
+//import { GlobalState } from "./services/global.state";
 import { Helpers } from './services/helpers';
 import { AuthService } from './services/auth';
 import { AuthInterceptor } from './services/httpInterceptor';
+import { HubService } from "./services/hub.service";
 
 // DAL
 
 import { CommonApi } from './services/context/commonApi';
 import { UserApi } from './services/context/userApi';
 import { ClubsApi } from './services/context/clubsApi';
-import { InnerMessageApi } from './services/context/innerMessageApi';
+import { ChatApi } from './services/context/chatApi';
 import { Context } from './services/context/context';
 
 // third party
@@ -54,7 +55,7 @@ import { MATERIAL_SANITY_CHECKS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MAT_D
     TranslateModule.forRoot(),
     NgbModule.forRoot(),
     CoreModule,
-    SharedModule,
+    SharedModule.forRoot(),
     ClubsModule,
     MessagesModule,
     ProfileModule,
@@ -69,13 +70,14 @@ import { MATERIAL_SANITY_CHECKS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MAT_D
     SoProtocol
   ],
   providers: [
+    HubService,
     Helpers,
-    GlobalState,
+    //GlobalState,
     AuthService,
     CommonApi,
     UserApi,
     ClubsApi,
-    InnerMessageApi,
+    ChatApi,
     Context,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS },

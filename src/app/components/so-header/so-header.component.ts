@@ -7,8 +7,8 @@ import { MatDialog, MatDialogConfig} from "@angular/material";
 import { LoginDialog } from "../so-login-dialog/so-login-dialog";
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { systemAvatar } from "../../configuration/constants";
-import { InnerMessageDto, InnerMessagesFilter } from "../../dto/innerMessage/index";
 import { MessageStatus, EntityType } from "../../dto/enums";
+import { ChatMessageDto } from "../../dto/chat/index";
 
 @Component({
     selector: "so-header",
@@ -23,31 +23,34 @@ export class SoHeader {
     logged = false;
     email: string;
     password: string;
-    messages : InnerMessageDto[] = [];
+    messages : ChatMessageDto[] = [];
 
     constructor(private readonly state: GlobalState, private readonly router: Router, private readonly authService: AuthService, public loginDialog: MatDialog,
         private readonly sanitizer: DomSanitizer, private readonly context: Context ) {
         this.logged = this.authService.isAuthenticated();
         this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(localStorage.getItem('avatar') || '');
+        if (this.authService.isAuthenticated()) {
+            this.loadMessages();
+        }
         this.state.subscribe(this.state.events.menu.isCollapsed, (isCollapsed: boolean) => {
             this.isMenuCollapsed = isCollapsed;
         });
         this.state.subscribe(this.state.events.global.logged, (logged: boolean) => {
             this.logged = logged;
             if (logged) {
-                const filter = new InnerMessagesFilter(EntityType.User, null, MessageStatus.Pending);
-                filter.page = 1;
-                filter.pageSize = 3;
-                this.context.innerMessageApi.getMessages(filter).subscribe(result => {
-                    this.messages = result.items;
-                }, error => {
-                });
+                this.loadMessages();
             }
         });
         this.state.subscribe(this.state.events.user.avatarChanged, () => {
             const avatar = localStorage.getItem('avatar') || '';
             this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(avatar);
         });
+    }
+
+    private loadMessages() {
+        this.context.chatApi.getLatest(3).subscribe(result => {
+            this.messages = result;
+        }, error => {})
     }
 
     openDialog(): void {

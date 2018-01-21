@@ -5,7 +5,8 @@ import { Route } from '../../core/route.service';
 import { SoMessagesList } from './so-messages-list/so-messages-list';
 
 const routes: Routes = Route.withShell([
-  { path: 'messages', component: SoMessagesList }
+  { path: 'messages', component: SoMessagesList },
+  { path: 'messages/:guid', component: SoMessagesList }
 ]);
 
 @NgModule({

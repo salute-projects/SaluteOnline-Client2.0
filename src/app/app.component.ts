@@ -10,7 +10,7 @@ import { Logger } from './core/logger.service';
 import { I18nService } from './core/i18n.service';
 import { SoSnackService } from './services/snack.service';
 import { ViewEncapsulation } from '@angular/core/src/metadata/view';
-import { GlobalState } from './services/global.state';
+// import { GlobalState } from './services/global.state';
 import { AuthService } from './services/auth';
 
 const log = new Logger('App');
