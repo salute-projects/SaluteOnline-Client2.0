@@ -3,9 +3,18 @@
     resolutionHideSidebar: 500
 }
 
+export const clientSettings = {
+    baseUrl: "http://localhost:4200"
+}
+
+export const isSettings = {
+    baseUrl: "http://localhost:8999"
+}
+
 export const apiSettings = {
-    baseUrl: 'http://localhost:5134/api/',
-    messageHub: 'http://localhost:5134/soMessageHub'
+    baseUrl: 'http://localhost:9000/api/',
+    baseAuthUrl: 'http://localhost:9001/api/',
+    messageHub: 'http://localhost:9000/soMessageHub'
 }
 
 export const systemAvatar =

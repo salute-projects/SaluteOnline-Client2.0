@@ -12,7 +12,7 @@
     </div>
     
     <div class="header-actions-container pull-right">
-        <button mat-raised-button color="primary" *ngIf="!logged" (click)="openDialog()">Увійти</button>
+        <button mat-raised-button color="primary" *ngIf="!logged" (click)="login()">Увійти</button>
 
         <button mat-mini-fab color="primary" class="m-r-16" *ngIf="logged" [matMenuTriggerFor]="messageMenu">
             <span>{{messages.length}}</span>

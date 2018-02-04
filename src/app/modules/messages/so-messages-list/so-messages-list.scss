@@ -32,3 +32,9 @@
         }
     }
 }
+
+.list-item-right-align {
+    .mat-list-item-content {
+        justify-content: flex-end;
+    }
+}

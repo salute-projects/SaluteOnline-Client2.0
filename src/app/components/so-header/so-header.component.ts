@@ -1,14 +1,13 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
 import { GlobalState } from "../../services/global.state";
-import { AuthService } from "../../services/auth";
 import { Context } from "../../services/context/context";
 import { MatDialog, MatDialogConfig} from "@angular/material";
-import { LoginDialog } from "../so-login-dialog/so-login-dialog";
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { systemAvatar } from "../../configuration/constants";
 import { MessageStatus, EntityType } from "../../dto/enums";
 import { ChatMessageDto } from "../../dto/chat/index";
+import { AuthenticationService } from "../../services/authentication.service";
 
 @Component({
     selector: "so-header",
@@ -25,13 +24,13 @@ export class SoHeader {
     password: string;
     messages : ChatMessageDto[] = [];
 
-    constructor(private readonly state: GlobalState, private readonly router: Router, private readonly authService: AuthService, public loginDialog: MatDialog,
-        private readonly sanitizer: DomSanitizer, private readonly context: Context ) {
-        this.logged = this.authService.isAuthenticated();
-        this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(localStorage.getItem('avatar') || '');
-        if (this.authService.isAuthenticated()) {
+    constructor(private readonly state: GlobalState, private readonly router: Router, public loginDialog: MatDialog,
+        private readonly sanitizer: DomSanitizer, private readonly context: Context, private readonly authenticationService: AuthenticationService ) {
+        this.authenticationService.isAuthenticated().subscribe(result => {
+            this.logged = result;
             this.loadMessages();
-        }
+        })
+        this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(localStorage.getItem('avatar') || '');
         this.state.subscribe(this.state.events.menu.isCollapsed, (isCollapsed: boolean) => {
             this.isMenuCollapsed = isCollapsed;
         });
@@ -53,22 +52,12 @@ export class SoHeader {
         }, error => {})
     }
 
-    openDialog(): void {
-        const config: MatDialogConfig = {
-            width: '400px',
-            panelClass: 'custom-dialog',
-            data: { email: this.email, password: this.password }
-        };
-        const dialogRef = this.loginDialog.open(LoginDialog, config);
-        dialogRef.afterClosed().subscribe(result => {
-            this.logged = result ? true : false;
-        }, () => {
-            this.logged = false;
-        });
+    login() {
+        this.authenticationService.login();
     }
 
     logout() {
-        this.authService.logout();
+        this.authenticationService.logoff();
     }
 
     toggleMenu() {

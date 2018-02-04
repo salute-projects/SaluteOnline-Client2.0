@@ -10,8 +10,10 @@ import { Logger } from './core/logger.service';
 import { I18nService } from './core/i18n.service';
 import { SoSnackService } from './services/snack.service';
 import { ViewEncapsulation } from '@angular/core/src/metadata/view';
-// import { GlobalState } from './services/global.state';
-import { AuthService } from './services/auth';
+
+import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { AuthenticationService } from './services/authentication.service';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 const log = new Logger('App');
 
@@ -20,9 +22,10 @@ const log = new Logger('App');
   templateUrl: './app.component.html',
   providers: [SoSnackService]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, private translateService: TranslateService, private i18nService: I18nService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, private translateService: TranslateService, private i18nService: I18nService,
+    public authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -34,6 +37,10 @@ export class AppComponent implements OnInit {
     log.debug('init');
 
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
+    this.authenticationService.initialize();
   }
 
+  ngOnDestroy() {
+    this.authenticationService.unsubscribe();
+  }
 }

@@ -8,10 +8,10 @@
                 </mat-list-item>
             </mat-nav-list>
         </div>
-        <div class="col-md-6 so-messages-container">
-            <mat-list>
-                <mat-list-item *ngFor="let message of messages.items">
-                    {{message.message}}
+        <div class="col-md-6">
+            <mat-list class="w-100">
+                <mat-list-item *ngFor="let message of messages.items" [class.list-item-right-align] = "message.my">
+                    <div class="chat-message" [class.my-chat-message]="message.my">{{message.message}}</div>
                 </mat-list-item>
             </mat-list>
         </div>

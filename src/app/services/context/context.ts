@@ -4,7 +4,6 @@ import { CommonApi } from "./commonApi";
 import { ClubsApi } from "./clubsApi";
 import { ChatApi } from "./chatApi";
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from "../../services/auth";
 
 @Injectable()
 export class Context {

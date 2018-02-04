@@ -1,5 +1,8 @@
 // system
 
+import { AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration, AuthWellKnownEndpoints } from 'angular-auth-oidc-client';
+import { isSettings, clientSettings } from "../app/configuration/constants";
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
@@ -21,8 +24,6 @@ import { ProfileModule } from './modules/profile/profile.module';
 // components
 
 import { AppComponent } from './app.component';
-
-import { LoginDialog } from './components/so-login-dialog/so-login-dialog';
 import { MembershipRequestDialog } from './components/so-membership-request-dialog/so-membership-request-dialog';
 import { SoProtocol } from './components/so-protocol/so-protocol';
 
@@ -30,11 +31,10 @@ import { SoProtocol } from './components/so-protocol/so-protocol';
 // service
 
 import { AppRoutingModule } from './app-routing.module';
-//import { GlobalState } from "./services/global.state";
 import { Helpers } from './services/helpers';
-import { AuthService } from './services/auth';
 import { AuthInterceptor } from './services/httpInterceptor';
 import { HubService } from "./services/hub.service";
+import { AuthenticationService } from './services/authentication.service';
 
 // DAL
 
@@ -61,19 +61,19 @@ import { MATERIAL_SANITY_CHECKS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MAT_D
     ProfileModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AuthModule.forRoot()
   ],
   declarations: [
     AppComponent,
-    LoginDialog,
     MembershipRequestDialog,
     SoProtocol
   ],
   providers: [
+    OidcSecurityService,
     HubService,
     Helpers,
-    //GlobalState,
-    AuthService,
+    AuthenticationService,
     CommonApi,
     UserApi,
     ClubsApi,
@@ -85,4 +85,33 @@ import { MATERIAL_SANITY_CHECKS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MAT_D
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(public oidc: OidcSecurityService) {
+    const conf = new OpenIDImplicitFlowConfiguration();
+    conf.stsServer = isSettings.baseUrl;
+    conf.redirect_url = clientSettings.baseUrl + "/signin-oidc";
+    conf.client_id = "salute-online-webapplication";
+    conf.response_type = "id_token token";
+    conf.scope = "openid profile salute_security_api";
+    conf.post_logout_redirect_uri = clientSettings.baseUrl + "/signout-callback-oidc";
+    conf.start_checksession = true;
+    conf.silent_renew = true;
+    conf.forbidden_route = "/forbidden";
+    conf.unauthorized_route = "/unauthorized";
+    conf.log_console_warning_active = true;
+    conf.log_console_debug_active = true;
+    conf.max_id_token_iat_offset_allowed_in_seconds = 600;
+
+    const endpoints = new AuthWellKnownEndpoints();
+    endpoints.issuer = isSettings.baseUrl;
+    endpoints.jwks_uri = isSettings.baseUrl + "/.well-known/openid-configuration/jwks";
+    endpoints.authorization_endpoint = isSettings.baseUrl + "/connect/authorize";
+    endpoints.token_endpoint = isSettings.baseUrl + "/connect/token";
+    endpoints.userinfo_endpoint = isSettings.baseUrl + "/connect/userinfo";
+    endpoints.end_session_endpoint = isSettings.baseUrl + "/connect/endsession";
+    endpoints.check_session_iframe = isSettings.baseUrl + "/connect/checksession";
+    endpoints.revocation_endpoint = isSettings.baseUrl + "/connect/revocation";
+    endpoints.introspection_endpoint = isSettings.baseUrl + "/connect/introspect";
+    this.oidc.setupModule(conf, endpoints);
+  }
+ }
