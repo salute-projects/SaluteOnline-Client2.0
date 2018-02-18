@@ -1,7 +1,7 @@
 import { EntityType } from "../enums";
 
 export class ChatMemberDto {
-    id: number;
+    guid: string;
     type: EntityType;
     title: string;
 }

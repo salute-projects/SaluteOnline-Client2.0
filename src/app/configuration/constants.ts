@@ -14,7 +14,7 @@ export const isSettings = {
 export const apiSettings = {
     baseUrl: 'http://localhost:9000/api/',
     baseAuthUrl: 'http://localhost:9001/api/',
-    messageHub: 'http://localhost:9000/soMessageHub'
+    messageHub: 'http://localhost:9006/soMessageHub'
 }
 
 export const systemAvatar =

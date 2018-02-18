@@ -4,9 +4,8 @@ export class ChatMessageDto {
     guid: string;
     message: string;
     sent: Date;
-    senderId: number;
+    sender: string;
     senderType: EntityType;
     seen: boolean;
     my: boolean;
-    avatar: string;
 }

@@ -12,7 +12,6 @@ export class AuthenticationService {
     }
 
     initialize() {
-        debugger;
         if (this.oidcSecurityService.moduleSetup) {
             this.doCallbackLogicIfRequired();
         } else {
@@ -43,7 +42,6 @@ export class AuthenticationService {
     }
 
     private doCallbackLogicIfRequired() {
-        debugger;
         if (window.location.hash) {
             this.oidcSecurityService.authorizedCallback();
         }

@@ -12,7 +12,6 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private readonly injector: Injector) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        debugger;
         if (req.url.indexOf('8999') > -1)
             return next.handle(req);
         if (this.oidc === undefined) {

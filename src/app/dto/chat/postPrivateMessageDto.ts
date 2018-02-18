@@ -1,9 +1,14 @@
 import { EntityType } from "../enums";
 
 export class PostPrivateMessageDto {
-    senderId: number;
+    chatGuid: string;
+    senderGuid: string;
     senderType: EntityType;
-    receiverId: number;
+    senderTitle: string;
+    
+    receiverGuid: string;
     receiverType: EntityType;
+    receiverTitle: string;
+    
     message: string;
 }

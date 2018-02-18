@@ -49,7 +49,6 @@ export class SoProtocol {
     }
 
     nicknameSelected(player: PlayerEntry) {
-        debugger;
     }
 
     nicknameOnChange(player: PlayerEntry) {
