@@ -1,3 +1,5 @@
+@import "../../../theme/theme-variables.scss";
+
 .shell-container {
     display: flex;
     min-height: 100vh;
@@ -5,11 +7,20 @@
     padding-right: 0;
 
     main {
+        margin-top: $header-height;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         flex-grow: 1;
         flex-shrink: 1;
         flex-basis: 0%;
+    }
+}
+
+.so-success-snackbar {
+    background-color: $main-green-dark;
+
+    .mat-simple-snackbar-action {
+        color: white;
     }
 }

@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 import { Logger } from './core/logger.service';
 import { I18nService } from './core/i18n.service';
 import { SoSnackService } from './services/snack.service';
+import { SoDialogService } from './services/dialog.service';
 import { ViewEncapsulation } from '@angular/core/src/metadata/view';
 
 import { OidcSecurityService } from 'angular-auth-oidc-client';
@@ -20,7 +21,7 @@ const log = new Logger('App');
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  providers: [SoSnackService]
+  providers: [SoSnackService, SoDialogService]
 })
 export class AppComponent implements OnInit, OnDestroy {
 

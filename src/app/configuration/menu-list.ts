@@ -76,4 +76,27 @@
             }
         }
     },
+    {
+        path: 'admin',
+        data: {
+            menu: {
+                title: 'Адмін-панель',
+                icon: 'list',
+                selected: false,
+                expanded: false,
+                order: 100,
+            }
+        },
+        children: [
+            {
+                path: 'clubs',
+                data: {
+                    menu: {
+                        title: 'Клуби',
+                        faicon: 'fa-book'
+                    }
+                }
+            }
+        ]
+    },
 ];

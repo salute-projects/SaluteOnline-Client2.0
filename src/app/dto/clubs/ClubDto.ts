@@ -7,8 +7,6 @@ export class ClubDto {
         this.country = '';
         this.registered = '';
         this.lastUpdate = '';
-        this.isFiim = false;
-        this.isActive = false;
         this.creatorId = -1;
         this.status = ClubStatus.None;
         this.logo = '';
@@ -22,8 +20,6 @@ export class ClubDto {
     description: string;
     registered: string;
     lastUpdate: string;
-    isFiim: boolean | null;
-    isActive: boolean | null;
     creatorId: number;
     status: ClubStatus;
     logo: string;

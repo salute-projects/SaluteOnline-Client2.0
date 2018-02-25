@@ -1,9 +1,12 @@
 ﻿import { Injector, Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { apiSettings } from "../../configuration/constants";
 import { Observable } from 'rxjs';
-import { CreateClubDto, ClubFilter, ClubSummaryDto, ClubInfoAggregation, ClubDto, ClubMemberSummary, ClubMemberFilter, CreateClubMemberDto, MembershipRequestCreateDto, MembershipRequestFilter, MembershipRequestDto, HandleMembershipRequestDto } from "../../dto/clubs/index";
+import { CreateClubDto, ClubFilter, ClubSummaryDto, ClubInfoAggregation, ClubDto, ClubMemberSummary, 
+    ClubMemberFilter, CreateClubMemberDto, MembershipRequestCreateDto, MembershipRequestFilter, MembershipRequestDto, 
+    HandleMembershipRequestDto, ClubAdministrationSummaryDto, ClubChangeStatusRequest } from "../../dto/clubs/index";
 import { Page } from "../../dto/common/index";
+import { Helpers } from "../helpers";
 
 @Injectable()
 export class ClubsApi {
@@ -18,10 +21,14 @@ export class ClubsApi {
         addClubMember: 'clubs/addClubMember',
         addMembershipRequest: 'clubs/addMembershipRequest',
         getMembershipRequests: 'clubs/getMembershipRequests',
-        handleMembershipRequest: 'clubs/handleMembershipRequest'
+        handleMembershipRequest: 'clubs/handleMembershipRequest',
+        canRegisterClub: 'clubs/canRegisterClub',
+        // administration
+        getClubsForAdministration: 'clubs/admin',
+        changeClubStatus: 'clubs/admin/changeStatus'
     }
 
-    constructor(private readonly http: HttpClient) {
+    constructor(private readonly http: HttpClient, private readonly helpers: Helpers) {
     }
 
     createClub(dto: CreateClubDto): Observable<string> {
@@ -66,5 +73,17 @@ export class ClubsApi {
 
     handleMembershipRequest(dto: HandleMembershipRequestDto): Observable<any> {
         return this.http.post(apiSettings.baseUrl + this.urls.handleMembershipRequest, dto, { responseType: "text" });
+    }
+
+    canRegisterClub() : Observable<boolean> {
+        return this.http.get<boolean>(apiSettings.baseUrl + this.urls.canRegisterClub);
+    }
+
+    getClubsForAdministration(filter: ClubFilter) : Observable<Page<ClubAdministrationSummaryDto>> {
+        return this.http.get<Page<ClubAdministrationSummaryDto>>(apiSettings.baseUrl + this.urls.getClubsForAdministration, { params: this.helpers.toHttpParams(filter) });
+    }
+
+    changeClubStatus(request: ClubChangeStatusRequest) : Observable<any> {
+        return this.http.put(apiSettings.baseUrl + this.urls.changeClubStatus, request, { responseType: 'text' });
     }
 }

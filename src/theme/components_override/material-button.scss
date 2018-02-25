@@ -4,6 +4,15 @@
     }
 }
 
+.mat-raised-button {
+    &.sml-button {
+        padding: 0 8px;
+        line-height: 30px;
+        min-width: 68px;
+        font-size: 12px;
+    }
+}
+
 .mat-mini-fab {
     &.header-fab-button {
         line-height: 30px;

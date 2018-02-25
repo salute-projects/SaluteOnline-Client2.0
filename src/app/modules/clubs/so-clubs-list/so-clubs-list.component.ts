@@ -24,6 +24,7 @@ export class SoClubsList {
     clubInfoAggregation: ClubInfoAggregation;
     clubsFilter: ClubFilter;
     clubs: Page<ClubSummaryDto>;
+    registerDisabled: boolean = false;
 
     constructor(private readonly context: Context, private readonly snackService: SoSnackService, private readonly state: GlobalState,
         private readonly loginDialog: MatDialog, private readonly router: Router) {
@@ -44,6 +45,11 @@ export class SoClubsList {
         }, error => {
             this.snackService.showError(error.error, "OK");
         });
+        return this.context.clubsApi.canRegisterClub().subscribe(result => {
+            this.registerDisabled = !result;
+        }, error => {
+            this.snackService.showError(error.error, "OK");
+        })
     }
 
     createClub() : void {

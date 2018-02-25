@@ -4,6 +4,7 @@
 @import "./components_override/material-menu.scss";
 @import "./components_override/material-tabs.scss";
 @import "./components_override/primeng-tree.scss";
+@import "./components_override/material-autocomplete.scss";
 
 body {
     display: flex;
@@ -127,4 +128,12 @@ a.disabled {
 
 .b-r-grey {
     border-right: 1px solid #d3d3d3;
+}
+
+.flex-1 {
+    flex: 1 !important;
+}
+
+.flex-2 {
+    flex: 2 !important;
 }

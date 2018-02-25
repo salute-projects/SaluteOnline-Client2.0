@@ -20,6 +20,7 @@ import { SharedModule } from "./shared/shared.module";
 import { ClubsModule } from "./modules/clubs/clubs.module";
 import { MessagesModule } from "./modules/messages/messages.module";
 import { ProfileModule } from './modules/profile/profile.module';
+import { AdminModule } from "./modules/admin/admin.module";
 
 // components
 
@@ -47,6 +48,7 @@ import { Context } from './services/context/context';
 // third party
 
 import { MATERIAL_SANITY_CHECKS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MAT_DATE_FORMATS, MatCardMdImage } from "@angular/material";
+import { SoDialog } from './components/so-dialog/so-dialog';
 
 @NgModule({
   imports: [
@@ -57,6 +59,7 @@ import { MATERIAL_SANITY_CHECKS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MAT_D
     CoreModule,
     SharedModule.forRoot(),
     ClubsModule,
+    AdminModule,
     MessagesModule,
     ProfileModule,
     AppRoutingModule,
@@ -67,8 +70,10 @@ import { MATERIAL_SANITY_CHECKS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MAT_D
   declarations: [
     AppComponent,
     MembershipRequestDialog,
-    SoProtocol
+    SoProtocol,
+    SoDialog
   ],
+  entryComponents: [SoDialog],
   providers: [
     OidcSecurityService,
     HubService,
@@ -101,6 +106,7 @@ export class AppModule {
     conf.log_console_warning_active = true;
     conf.log_console_debug_active = true;
     conf.max_id_token_iat_offset_allowed_in_seconds = 600;
+    conf.storage = localStorage;
 
     const endpoints = new AuthWellKnownEndpoints();
     endpoints.issuer = isSettings.baseUrl;

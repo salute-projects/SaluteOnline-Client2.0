@@ -1,0 +1,54 @@
+<div>
+    <mat-table #table [dataSource]="clubsDataSet">
+        <ng-container matColumnDef="icon">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <img height="24" [src]="getClubAvatar(row.logo)" alt="logo" />
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef> TITLE </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef> STATUS </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <mat-form-field>
+                    <mat-select [(ngModel)]="row.status" (selectionChange)="statusChanged(row)">
+                        <mat-option *ngFor="let status of statuses" [value]="status.value">
+                            {{ status.title }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="country">
+            <mat-header-cell *matHeaderCellDef> COUNTRY </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.country}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="city">
+            <mat-header-cell *matHeaderCellDef> CITY </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.city}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="registered">
+            <mat-header-cell *matHeaderCellDef> REGISTERED </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.registered | amUtc | amDateFormat: 'MMMM Do YYYY, h:mm:ss a'}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="author">
+            <mat-header-cell *matHeaderCellDef> CREATOR </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.creatorUsername}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef class="text-right"></mat-header-cell>
+            <mat-cell *matCellDef="let row" nowrap>
+                <button mat-raised-button color="primary">EDIT</button>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator [length]="getLength(clubsDataSet)" [pageIndex]="clubsDataSet.currentPage - 1" [pageSize]="clubsDataSet.pageSize"
+        [pageSizeOptions]="[5, 10, 25, 100]" (page)="paginationEvent($event)">
+    </mat-paginator>
+</div>

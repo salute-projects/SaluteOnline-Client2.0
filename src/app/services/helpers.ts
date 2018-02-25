@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { FormGroup } from "@angular/forms";
+import { HttpParams } from "@angular/common/http";
 
 @Injectable()
 export class Helpers {
@@ -13,5 +14,18 @@ export class Helpers {
             }
         }
         return target;
+    }
+
+    toHttpParams(obj: Object): HttpParams {
+        let params = new HttpParams();
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                const val = obj[key];
+                if (val !== undefined) {
+                    params = params.append(key, val ? val.toString() : val);
+                }
+            }
+        }
+        return params;
     }
 }

@@ -9,7 +9,7 @@ import { GlobalState } from "../../../services/global.state";
 
 @Component({
     selector: 'so-user-profile',
-    styleUrls: ['./so-user-profile.component.scss'],
+    styleUrls: ['./so-user-profile.component.scss' ],
     templateUrl: './so-user-profile.component.html',
     encapsulation: ViewEncapsulation.None
 })

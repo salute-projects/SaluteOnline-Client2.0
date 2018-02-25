@@ -1,0 +1,15 @@
+.mat-autocomplete-panel {
+    overflow-x: hidden !important;
+
+    .mat-option {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        display: block;
+        cursor: pointer;
+
+        .mat-option-text {
+            padding: 4px;
+            padding-left: 12px;
+        }
+    }
+}

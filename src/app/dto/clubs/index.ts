@@ -10,6 +10,8 @@ import { MembershipRequestCreateDto } from "./MembershipRequestCreateDto";
 import { MembershipRequestDto } from "./MembershipRequestDto";
 import { MembershipRequestFilter } from "./MembershipRequestFilter";
 import { ClubSummaryDto } from "./ClubSummaryDto";
+import { ClubAdministrationSummaryDto } from "./ClubAdministrationSummaryDto";
+import { ClubChangeStatusRequest } from "./ClubChangeStatusRequest";
 
 export { ClubDto, ClubFilter, ClubInfoAggregation, ClubMemberFilter, ClubMemberSummary, ClubSummaryDto, 
-    CreateClubDto, CreateClubMemberDto, HandleMembershipRequestDto, MembershipRequestCreateDto, MembershipRequestDto, MembershipRequestFilter }
+    CreateClubDto, CreateClubMemberDto, HandleMembershipRequestDto, MembershipRequestCreateDto, MembershipRequestDto, MembershipRequestFilter, ClubAdministrationSummaryDto, ClubChangeStatusRequest }
