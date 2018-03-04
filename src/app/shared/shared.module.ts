@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import {
     MatButtonModule, MatIconModule, MatMenuModule, MatDialogModule, MatTabsModule, MatInputModule, MatFormFieldModule, MatSnackBarModule, MatCardModule, MatDatepickerModule,
-    MatNativeDateModule, MatGridListModule, MatAutocompleteModule, MatExpansionModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatListModule } from "@angular/material";
+    MatNativeDateModule, MatGridListModule, MatAutocompleteModule, MatExpansionModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatListModule, MatProgressSpinnerModule, 
+    MatProgressBarModule, MatSortModule } from "@angular/material";
 
 import { TreeModule } from 'primeng/primeng';
 import { MomentModule } from "angular2-moment";
@@ -34,6 +35,9 @@ import { ModuleWithProviders } from '@angular/compiler/src/core';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatSortModule,
     TreeModule,
     MomentModule,
     FormsModule,
@@ -59,6 +63,9 @@ import { ModuleWithProviders } from '@angular/compiler/src/core';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatSortModule,
     TreeModule,
     MomentModule,
     FormsModule,

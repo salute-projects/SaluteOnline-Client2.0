@@ -1,21 +1,22 @@
-import { Component, ViewEncapsulation, OnInit } from "@angular/core";
+import { Component, ViewEncapsulation, OnInit, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Observable } from 'rxjs/Observable';
 import { Context } from "../../../services/context/context";
 import { SoSnackService } from "../../../services/snack.service";
 import { GlobalState } from "../../../services/global.state";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatSort, PageEvent } from "@angular/material";
 import { ClubFilter } from "../../../dto/clubs/ClubFilter";
 import { ClubStatus } from "../../../dto/enums";
-import { Location } from "@angular/common";
+import { Location, LocationStrategy } from "@angular/common";
 import { DataSource } from "@angular/cdk/collections";
-import { ClubAdministrationSummaryDto } from "../../../dto/clubs/index";
+import { ClubAdministrationSummaryDto, ClubInfoAggregation } from "../../../dto/clubs/index";
 import { Page } from "../../../dto/common/index";
 import { CustomDataSource } from "../../../services/datatable.service";
 import { resetFakeAsyncZone } from "@angular/core/testing";
 import { SoDialogService } from "../../../services/dialog.service";
 import * as _ from "lodash";
 import { ClubChangeStatusRequest } from "../../../dto/clubs/ClubChangeStatusRequest";
+import { Helpers } from "../../../services/helpers";
 
 @Component({
     selector: 'so-admin-clubs',
@@ -26,60 +27,65 @@ import { ClubChangeStatusRequest } from "../../../dto/clubs/ClubChangeStatusRequ
 
 export class SoAdminClubsList implements OnInit {
 
+    constructor(private readonly context: Context, private readonly snackService: SoSnackService, private readonly dialogService: SoDialogService,
+        private readonly router: Router, private route: ActivatedRoute, private location: Location, private helpers: Helpers,
+        private readonly url: LocationStrategy) {
+    }
+
+    filteringEnabled = false;
     private filter: ClubFilter = new ClubFilter();
-    private clubsDataSet = new CustomDataSource<ClubAdministrationSummaryDto>([]);
-    private clubs = new Page<ClubAdministrationSummaryDto>();
+    clubsDataSet = new CustomDataSource<ClubAdministrationSummaryDto>([]);
+    clubs = new Page<ClubAdministrationSummaryDto>();
     private clubsInitial: Array<ClubAdministrationSummaryDto> = [];
+    countries : string[] = [];
+    cities : string[] = [];
+    isLoadingResults = true;
+    clearFilterDisabled = true;
 
     displayedColumns = ['icon', 'title', 'status', 'country', 'city', 'registered', 'author', 'actions'];
-    statuses = [{ value: 1, title: 'Active' },
-        { value: 2, title: 'Pending' },
-        { value: 3, title: 'Blocked' },
-        { value: 4, title: 'Deleted' },
-        { value: 0, title: 'None' }];
+    statuses = [
+        { value: 1, title: 'Active', showInFilter: true, showInTable: true },
+        { value: 2, title: 'Pending', showInFilter: true, showInTable: true },
+        { value: 3, title: 'Blocked', showInFilter: true, showInTable: true },
+        { value: 4, title: 'Deleted', showInFilter: true, showInTable: true },
+        { value: 0, title: 'None', showInFilter: false, showInTable: true },
+        { value: 0, title: 'All', showInFilter: true, showInTable: false }
+    ];
 
-    constructor(private readonly context: Context, private readonly snackService: SoSnackService, private readonly dialogService: SoDialogService,
-        private readonly router: Router, private route: ActivatedRoute, private location: Location) {
+    getFilterStatuses() {
+        return this.statuses.filter(t => t.showInFilter);
     }
+
+    getTableStatuses() {
+        return this.statuses.filter(t => t.showInTable);
+    }
+
+    @ViewChild(MatSort) 
+    sort: MatSort;
 
     ngOnInit(): void {
         this.route.queryParamMap.subscribe(t => {
             if (!t.keys.length) {
-                this.router.navigate([], { queryParams: { page: 1, status: ClubStatus.All } })
+                this.router.navigate([], { queryParams: { page: 1, status: ClubStatus.None, pageSize: 25 } })
                 return;
             }
             this.filter.page = Number(t.get('page'));
-            this.filter.status = ClubStatus[t.get('status')];
+            this.filter.pageSize = Number(t.get('pageSize'));
+            this.filter.status = Number(t.get('status'));
             this.filter.asc = t.has('asc') ? new Boolean(t.get('asc')).valueOf() : true;
             this.filter.city = t.get('city') || '';
             this.filter.country = t.get('country') || '';
             this.filter.title = t.get('title') || '';
-            this.context.clubsApi.getClubsForAdministration(this.filter).subscribe(result => {
-                this.clubsDataSet = new CustomDataSource<ClubAdministrationSummaryDto>(result.items);
-                this.clubs = result;
-                this.clubsInitial = _.cloneDeep(result.items);
-            }, error => {
+            this.loadClubs();
+            this.loadAggregation();
+            this.sort.sortChange.subscribe(() => {
+                if (this.filteringEnabled)
+                    return;
+                this.filter.asc = this.sort.direction === "asc";
+                this.filter.orderBy = this.helpers.capitalizeFirstLetter(this.sort.active);
+                this.loadClubs();
             })
         })
-    }
-
-    getLength<T>(page: Page<T>) {
-        return page.items ? page.items.length : 0;
-    }
-
-    getStatusDisplay(status: ClubStatus) {
-        switch(status) {
-            case ClubStatus.Active:
-                return "Active";
-            case ClubStatus.PendingActivation:
-                return "Pending";
-            case ClubStatus.Blocked:
-                return "Blocked";
-            case ClubStatus.Deleted:
-                return "Deleted";
-            default:
-                return "None";
-        }
     }
 
     getClubAvatar(base64: string) {
@@ -107,9 +113,62 @@ export class SoAdminClubsList implements OnInit {
                     this.snackService.showError(error.error, 'OK');
                 });
             }
-            debugger;
-        }, error => {
-            debugger;
         });
+    }
+
+    paginationEvent(event: PageEvent) {
+        this.filter.page = event.pageIndex + 1;
+        this.filter.pageSize = event.pageSize;
+        this.loadClubs();
+    }
+
+    debouncedFilterChanged = _.debounce(t => {
+        this.loadClubs();
+    }, 500)
+
+    loadClubs() {
+        this.isLoadingResults = true;
+        this.context.clubsApi.getClubsForAdministration(this.filter).subscribe(result => {
+            this.clubsDataSet = new CustomDataSource<ClubAdministrationSummaryDto>(result.items);
+            this.clubs = result;
+            this.clubsInitial = _.cloneDeep(result.items);
+            this.setUrl();
+            this.clearFilterDisabled = !this.isFilterApplied();
+        }, error => {
+            this.snackService.showError(error.error, "OK", 5000);
+        }, () => {
+            this.isLoadingResults = false;
+        })
+    }
+
+    loadAggregation() {
+        this.context.clubsApi.getClubInfoAggregation().subscribe(result => {
+            this.countries = result.geography.map(t => t.key);
+            this.cities = result.geography.map(t => t.value).reduce((a, b) => a.concat(b), []);
+        });
+    }
+
+    toggleFiltering() {
+        this.filteringEnabled = !this.filteringEnabled;
+    }
+
+    isFilterApplied() : boolean {
+        return !!this.filter.title || this.filter.status !== ClubStatus.None || !!this.filter.country || !!this.filter.city;
+    }
+
+    clearFilter() {
+        this.filter.title = "";
+        this.filter.status = ClubStatus.None;
+        this.filter.country = "";
+        this.filter.city = "";
+        this.filter.page = 1;
+        this.filter.pageSize = 25;
+        this.filter.asc = true;
+        this.loadClubs();
+    }
+
+    setUrl() {
+        const url = this.router.createUrlTree(['/admin/clubs'], { queryParams: _.pickBy(this.filter), queryParamsHandling: "merge" }).toString();
+        this.location.go(url);
     }
 }

@@ -21,11 +21,17 @@ export class Helpers {
         for (const key in obj) {
             if (obj.hasOwnProperty(key)) {
                 const val = obj[key];
-                if (val !== undefined) {
+                if (val !== undefined && val !== null) {
                     params = params.append(key, val ? val.toString() : val);
                 }
             }
         }
         return params;
+    }
+
+    capitalizeFirstLetter(value: string) {
+        if (!value)
+            return "";
+        return value[0].toUpperCase() + value.slice(1);
     }
 }

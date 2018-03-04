@@ -9,6 +9,7 @@ export class ClubFilter extends BaseFilter {
         this.asc = false;
         this.city = "";
         this.creatorId = null;
+        this.country = "";
         this.status = ClubStatus.ActiveAndPending;
         this.page = 1;
         this.pageSize = 25;

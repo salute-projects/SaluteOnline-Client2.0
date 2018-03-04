@@ -92,7 +92,16 @@
                 path: 'clubs',
                 data: {
                     menu: {
-                        title: 'Клуби',
+                        title: 'Clubs',
+                        faicon: 'fa-book'
+                    }
+                }
+            },
+            {
+                path: 'users',
+                data: {
+                    menu: {
+                        title: 'Members',
                         faicon: 'fa-book'
                     }
                 }

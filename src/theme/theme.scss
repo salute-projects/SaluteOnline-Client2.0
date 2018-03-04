@@ -137,3 +137,17 @@ a.disabled {
 .flex-2 {
     flex: 2 !important;
 }
+
+.rotated {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transition-duration: 0.5s;
+    transition-property: transform;
+}
+
+.not-rotated {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transition-duration: 0.5s;
+    transition-property: transform;
+}

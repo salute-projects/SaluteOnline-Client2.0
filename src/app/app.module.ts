@@ -97,14 +97,14 @@ export class AppModule {
     conf.redirect_url = clientSettings.baseUrl + "/signin-oidc";
     conf.client_id = "salute-online-webapplication";
     conf.response_type = "id_token token";
-    conf.scope = "openid profile salute_security_api";
+    conf.scope = "openid profile salute_security_api offline_access";
     conf.post_logout_redirect_uri = clientSettings.baseUrl + "/signout-callback-oidc";
     conf.start_checksession = true;
     conf.silent_renew = true;
     conf.forbidden_route = "/forbidden";
     conf.unauthorized_route = "/unauthorized";
     conf.log_console_warning_active = true;
-    conf.log_console_debug_active = true;
+    conf.log_console_debug_active = false;
     conf.max_id_token_iat_offset_allowed_in_seconds = 600;
     conf.storage = localStorage;
 

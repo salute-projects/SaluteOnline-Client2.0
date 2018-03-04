@@ -1,21 +1,36 @@
 <div>
-    <mat-table #table [dataSource]="clubsDataSet">
+    <so-spinner [isEnabled]="isLoadingResults"></so-spinner>
+    <mat-table #table [dataSource]="clubsDataSet" class="pt-3" matSort matSortActive="registered" matSortDisableClear [matSortDisabled]="filteringEnabled" matSortDirection="asc">
         <ng-container matColumnDef="icon">
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let row">
+            <mat-header-cell [style.flex]="'0 0 50px'" *matHeaderCellDef></mat-header-cell>
+            <mat-cell [style.flex]="'0 0 50px'" *matCellDef="let row">
                 <img height="24" [src]="getClubAvatar(row.logo)" alt="logo" />
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="title">
-            <mat-header-cell *matHeaderCellDef> TITLE </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+                <span *ngIf="!filteringEnabled">TITLE</span>
+                <mat-form-field *ngIf="filteringEnabled">
+                    <input matInput placeholder="TITLE" [(ngModel)]="filter.title" (ngModelChange)="debouncedFilterChanged()" />
+                </mat-form-field>
+            </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="status">
-            <mat-header-cell *matHeaderCellDef> STATUS </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+                <span *ngIf="!filteringEnabled">STATUS</span>
+                <mat-form-field *ngIf="filteringEnabled">
+                    <mat-select [(ngModel)]="filter.status" (selectionChange)="loadClubs()" placeholder="Status">
+                        <mat-option *ngFor="let status of getFilterStatuses()" [value]="status.value">
+                            {{ status.title }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> 
+            </mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <mat-form-field>
                     <mat-select [(ngModel)]="row.status" (selectionChange)="statusChanged(row)">
-                        <mat-option *ngFor="let status of statuses" [value]="status.value">
+                        <mat-option *ngFor="let status of getTableStatuses()" [value]="status.value">
                             {{ status.title }}
                         </mat-option>
                     </mat-select>
@@ -23,15 +38,35 @@
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="country">
-            <mat-header-cell *matHeaderCellDef> COUNTRY </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+                <span *ngIf="!filteringEnabled">COUNTRY</span>
+                <mat-form-field *ngIf="filteringEnabled">
+                    <mat-select [(ngModel)]="filter.country" (selectionChange)="loadClubs()" placeholder="Country">
+                        <mat-option value="">All</mat-option>
+                        <mat-option *ngFor="let country of countries" [value]="country">
+                            {{ country }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> 
+            </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.country}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="city">
-            <mat-header-cell *matHeaderCellDef> CITY </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+                <span *ngIf="!filteringEnabled">CITY</span>
+                <mat-form-field *ngIf="filteringEnabled">
+                    <mat-select [(ngModel)]="filter.city" (selectionChange)="loadClubs()" placeholder="City">
+                        <mat-option value="">All</mat-option>
+                        <mat-option *ngFor="let city of cities" [value]="city">
+                            {{ city }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> 
+            </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.city}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="registered">
-            <mat-header-cell *matHeaderCellDef> REGISTERED </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> REGISTERED </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.registered | amUtc | amDateFormat: 'MMMM Do YYYY, h:mm:ss a'}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="author">
@@ -39,8 +74,13 @@
             <mat-cell *matCellDef="let row"> {{row.creatorUsername}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef class="text-right"></mat-header-cell>
-            <mat-cell *matCellDef="let row" nowrap>
+            <mat-header-cell *matHeaderCellDef class="text-right">
+                <button mat-raised-button color="primary" [disabled]="clearFilterDisabled" (click)="clearFilter()">CLEAR FILTER</button>
+                <button mat-button (click)="toggleFiltering()">
+                    <mat-icon [class.rotated]="filteringEnabled" [class.not-rotated]="!filteringEnabled">filter_list</mat-icon>
+                </button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" nowrap class="d-flex justify-content-end">
                 <button mat-raised-button color="primary">EDIT</button>
             </mat-cell>
         </ng-container>
@@ -48,7 +88,7 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
 
-    <mat-paginator #paginator [length]="getLength(clubsDataSet)" [pageIndex]="clubsDataSet.currentPage - 1" [pageSize]="clubsDataSet.pageSize"
+    <mat-paginator #paginator [length]="clubs.total" [pageIndex]="clubs.currentPage - 1" [pageSize]="clubs.pageSize"
         [pageSizeOptions]="[5, 10, 25, 100]" (page)="paginationEvent($event)">
     </mat-paginator>
 </div>

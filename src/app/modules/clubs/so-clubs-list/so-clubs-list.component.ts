@@ -81,18 +81,18 @@ export class SoClubsList {
         this.refreshClubsList();
     }
 
-    private convertToTreeNodes(data: Map<string, Array<string>>) : TreeNode[] {
+    private convertToTreeNodes(data: Array<{ key: string, value: Array<string>}>) : TreeNode[] {
         if (!data || !data)
             return new Array<TreeNode>();
         const result = new Array<any>();
-        data.forEach((item: any, key: string) => {
+        data.forEach(t => {
             result.push({
-                label: item.key + " (" + item.value.length + ")",
-                data: item.key,
+                label: t.key + " (" + t.value.length + ")",
+                data: t.key,
                 expanded: true,
                 expandedIcon: 'fa-map-marker',
                 collapsedIcon: 'fa-map-marker',
-                children: item.value.map((subitem: string) => {
+                children: t.value.map((subitem: string) => {
                     return {
                         label: subitem,
                         data: subitem,

@@ -22,7 +22,6 @@ export class ShellComponent {
       this.isMenuCollapsed = isCollapsed;
     });
     this.auth.isAuthenticated().subscribe(result => {
-      console.log(result);
       if (result) {
         var token = this.auth.getToken();
       this.hub.start(token);

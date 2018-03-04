@@ -73,7 +73,12 @@ export class SoClubsEdit {
     }
 
     onAvatarChange(event: any) {
-        
+        const newAvatar: File = event.target.files[0];
+        this.context.clubsApi.changeAvatar(newAvatar, this.id).subscribe(result => {
+            this.clubInfo.logo = `data:image/jpg;base64,${result}`;
+        }, error => {
+            this.snackService.showError(error.error, 'OK');
+        });
     }
 
     updateMainClubInfo() {

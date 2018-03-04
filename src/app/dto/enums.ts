@@ -4,8 +4,7 @@ export enum ClubStatus {
     PendingActivation = 2,
     Blocked = 3,
     Deleted = 4,
-    ActiveAndPending = 5,
-    All = 6
+    ActiveAndPending = 5
 }
 
 export enum MembershipRequestStatus {
@@ -47,4 +46,20 @@ export enum BestPlayers {
     Best1 = 1,
     Best2 = 2,
     Best3 = 3
+}
+
+export enum Role {
+    None = 0,
+    User = 1,
+    ClubAdmin = 2,
+    GlobalAdmin = 3,
+    SilentDon = 4,
+    Guest = 5
+} 
+
+export enum UserStatus {
+    None = 0,
+    Active = 1,
+    Blocked = 2,
+    Deleted = 3
 }

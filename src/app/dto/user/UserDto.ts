@@ -1,3 +1,5 @@
+import { UserStatus } from "../enums";
+
 export class UserDto {
     id: number;
     firstName: string;
@@ -14,10 +16,10 @@ export class UserDto {
     vk: string;
     instagram: string;
     skype: string;
-    isActive: boolean;
+    status: UserStatus;
     role: number;
-    registered: string;
-    lastActivity: string;
+    registered: Date;
+    lastActivity: Date;
     nickname: string;
     avatar: string;
 }

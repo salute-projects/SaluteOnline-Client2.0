@@ -1,5 +1,5 @@
 ﻿import { Injector, Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { apiSettings } from "../../configuration/constants";
 import { Observable } from 'rxjs';
 import { CreateClubDto, ClubFilter, ClubSummaryDto, ClubInfoAggregation, ClubDto, ClubMemberSummary, 
@@ -23,6 +23,7 @@ export class ClubsApi {
         getMembershipRequests: 'clubs/getMembershipRequests',
         handleMembershipRequest: 'clubs/handleMembershipRequest',
         canRegisterClub: 'clubs/canRegisterClub',
+        changeAvatar: 'clubs/changeAvatar',
         // administration
         getClubsForAdministration: 'clubs/admin',
         changeClubStatus: 'clubs/admin/changeStatus'
@@ -85,5 +86,13 @@ export class ClubsApi {
 
     changeClubStatus(request: ClubChangeStatusRequest) : Observable<any> {
         return this.http.put(apiSettings.baseUrl + this.urls.changeClubStatus, request, { responseType: 'text' });
+    }
+
+    changeAvatar(avatar: File, id: number): Observable<any> {
+        const headers = new HttpHeaders();
+        headers.append('Content-Type', 'multipart/form-data');
+        const formData = new FormData();
+        formData.append('avatar', avatar, avatar.name);
+        return this.http.post(apiSettings.baseUrl + this.urls.changeAvatar + "/" + id, formData, { headers: headers, responseType: 'text' });
     }
 }

@@ -13,6 +13,12 @@
     }
 }
 
+.mat-raised-button, .mat-button {
+    &.narrow-button {
+        min-width: 68px;
+    }
+}
+
 .mat-mini-fab {
     &.header-fab-button {
         line-height: 30px;
