@@ -1,10 +1,11 @@
 ﻿export const menuList = [
     {
-        path: 'fetch-data',
+        path: 'dashboard',
         data: {
             menu: {
                 title: 'Home',
-                icon: 'home'
+                icon: 'home',
+                selected: true
             }
         }
     },

@@ -3,6 +3,8 @@ import { Routes, Router, NavigationEnd } from "@angular/router";
 import { SoMenuService } from "./so-menu.service";
 import { Subscription } from "rxjs/Rx";
 import { GlobalState } from "../../services/global.state";
+import { Context } from "../../services/context/context";
+import { AuthenticationService } from "../../services/authentication.service";
 
 @Component({
     selector: "so-menu",

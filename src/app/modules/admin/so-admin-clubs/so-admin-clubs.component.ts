@@ -103,8 +103,8 @@ export class SoAdminClubsList implements OnInit {
                 var request = new ClubChangeStatusRequest();
                 request.clubId = row.id;
                 request.status = row.status;
-                this.context.clubsApi.changeClubStatus(request).subscribe(result => {
-                    this.snackService.showSuccess('Club status successfully changed', 'OK')
+                this.context.adminClubsApi.changeClubStatus(request).subscribe(result => {
+                    this.snackService.showSuccess('Club status successfully changed', 'OK', 500)
                     var original = this.clubsInitial.find(t => t.id == row.id);
                     if (original) {
                         original.status = row.status;
@@ -128,7 +128,7 @@ export class SoAdminClubsList implements OnInit {
 
     loadClubs() {
         this.isLoadingResults = true;
-        this.context.clubsApi.getClubsForAdministration(this.filter).subscribe(result => {
+        this.context.adminClubsApi.getClubsForAdministration(this.filter).subscribe(result => {
             this.clubsDataSet = new CustomDataSource<ClubAdministrationSummaryDto>(result.items);
             this.clubs = result;
             this.clubsInitial = _.cloneDeep(result.items);

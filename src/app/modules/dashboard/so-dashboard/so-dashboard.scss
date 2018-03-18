@@ -1,0 +1,53 @@
+@import "../../../../theme/theme-variables";
+@import "../../../../theme/mixins";
+
+.dashboard {
+    position: relative;
+    margin-top: $default-margin;
+
+    gridster {
+        background: none;
+
+        article {
+            padding: 2px;
+        }
+    }
+
+    .club-dashboard-card {
+        padding: 0;
+
+        .mat-card-header, .mat-card-content {
+            cursor: default;
+            padding: 12px;
+        }
+
+        .mat-card-header {
+            background-color: #3f51b5;
+            color: white;
+
+            .mat-card-title {
+                text-transform: uppercase;
+                margin-bottom: 0;
+                font-family: $font-family;
+            }
+        }
+    }
+
+    .club-statistic-circle {
+        text {
+            transform: translateY(10px);
+        }
+    }
+}
+
+.draggable-header {
+    background-color: $main-red;
+    font-family: $font-family;
+    text-transform: uppercase;
+    cursor: move;
+    color: white;
+
+    &:hover {
+      background-color: $main-red-hover;  
+    }
+}

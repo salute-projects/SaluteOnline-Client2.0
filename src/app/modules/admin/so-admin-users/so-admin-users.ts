@@ -16,6 +16,7 @@ import { Role, UserStatus } from "../../../dto/enums";
 import { UserFilter } from "../../../dto/user/UserFilter";
 import { UserDto } from "../../../dto/user/index";
 import { SetRoleRequest } from "../../../dto/user/SetRoleRequest";
+import { SetStatusRequest } from "../../../dto/user/SetStatusRequest";
 @Component({
     selector: 'so-admin-users',
     styleUrls: ['./so-admin-users.scss'],
@@ -27,7 +28,6 @@ export class SoAdminUsersList implements OnInit {
 
     constructor(private readonly context: Context, private readonly snackService: SoSnackService, private readonly dialogService: SoDialogService,
         private readonly router: Router, private route: ActivatedRoute, private location: Location, private helpers: Helpers) {
-            debugger;
     }
 
     filter = new UserFilter();
@@ -106,7 +106,7 @@ export class SoAdminUsersList implements OnInit {
 
     loadUsers() {
         this.isLoading = true;
-        this.context.userApi.getUsers(this.filter).subscribe(result => {
+        this.context.adminUsersApi.getUsers(this.filter).subscribe(result => {
             this.usersDataSet = new CustomDataSource(result.items);
             this.users = result;
             this.usersInitial = _.cloneDeep(result.items);
@@ -142,7 +142,7 @@ export class SoAdminUsersList implements OnInit {
                 var request = new SetRoleRequest();
                 request.userId = row.id;
                 request.role = row.role;
-                this.context.userApi.setUserRole(request).subscribe(result => {
+                this.context.adminUsersApi.setUserRole(request).subscribe(result => {
                     this.snackService.showSuccess('Role successfully changed', 'OK')
                     var original = this.usersInitial.find(t => t.id == row.id);
                     if (original) {
@@ -156,7 +156,27 @@ export class SoAdminUsersList implements OnInit {
     }
 
     statusChanged(row: UserDto) {
-
+        this.dialogService.open('CHANGE USER STATUS', 'Do you really want to change status of this user?').subscribe(confirmed => {
+            if (confirmed != true) {
+                var original = this.usersInitial.find(t => t.id == row.id);
+                if (original) {
+                    row.status = original.status;
+                }
+            } else {
+                var request = new SetStatusRequest();
+                request.status = row.status;
+                request.userId = row.id;
+                this.context.adminUsersApi.setUserStatus(request).subscribe(result => {
+                    this.snackService.showSuccess('Status successfully changed', 'OK');
+                    var original = this.usersInitial.find(t => t.id == row.id);
+                    if (original) {
+                        original.status = row.status;
+                    }
+                }, error => {
+                    this.snackService.showError(error.error, 'OK');
+                })
+            }
+        })
     }
 
     paginationEvent(event: PageEvent) {

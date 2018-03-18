@@ -23,10 +23,7 @@ export class ClubsApi {
         getMembershipRequests: 'clubs/getMembershipRequests',
         handleMembershipRequest: 'clubs/handleMembershipRequest',
         canRegisterClub: 'clubs/canRegisterClub',
-        changeAvatar: 'clubs/changeAvatar',
-        // administration
-        getClubsForAdministration: 'clubs/admin',
-        changeClubStatus: 'clubs/admin/changeStatus'
+        changeAvatar: 'clubs/changeAvatar'
     }
 
     constructor(private readonly http: HttpClient, private readonly helpers: Helpers) {
@@ -78,14 +75,6 @@ export class ClubsApi {
 
     canRegisterClub() : Observable<boolean> {
         return this.http.get<boolean>(apiSettings.baseUrl + this.urls.canRegisterClub);
-    }
-
-    getClubsForAdministration(filter: ClubFilter) : Observable<Page<ClubAdministrationSummaryDto>> {
-        return this.http.get<Page<ClubAdministrationSummaryDto>>(apiSettings.baseUrl + this.urls.getClubsForAdministration, { params: this.helpers.toHttpParams(filter) });
-    }
-
-    changeClubStatus(request: ClubChangeStatusRequest) : Observable<any> {
-        return this.http.put(apiSettings.baseUrl + this.urls.changeClubStatus, request, { responseType: 'text' });
     }
 
     changeAvatar(avatar: File, id: number): Observable<any> {

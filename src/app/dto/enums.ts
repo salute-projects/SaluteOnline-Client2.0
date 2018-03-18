@@ -63,3 +63,9 @@ export enum UserStatus {
     Blocked = 2,
     Deleted = 3
 }
+
+export enum WidgetType {
+    None = 0,
+    MyClubs = 1,
+    Other = 2
+}

@@ -49,6 +49,11 @@ import { Context } from './services/context/context';
 
 import { MATERIAL_SANITY_CHECKS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MAT_DATE_FORMATS, MatCardMdImage } from "@angular/material";
 import { SoDialog } from './components/so-dialog/so-dialog';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { AdminClubsApi } from './services/context/adminClubs';
+import { AdminUsersApi } from './services/context/adminUsersApi';
+import { ClubStatisticApi } from './services/context/clubStatisticApi';
+import { ConfigurationApi } from './services/context/configurationApi';
 
 @NgModule({
   imports: [
@@ -59,6 +64,7 @@ import { SoDialog } from './components/so-dialog/so-dialog';
     CoreModule,
     SharedModule.forRoot(),
     ClubsModule,
+    DashboardModule,
     AdminModule,
     MessagesModule,
     ProfileModule,
@@ -83,6 +89,10 @@ import { SoDialog } from './components/so-dialog/so-dialog';
     UserApi,
     ClubsApi,
     ChatApi,
+    AdminClubsApi,
+    AdminUsersApi,
+    ClubStatisticApi,
+    ConfigurationApi,
     Context,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS },
@@ -94,18 +104,19 @@ export class AppModule {
   constructor(public oidc: OidcSecurityService) {
     const conf = new OpenIDImplicitFlowConfiguration();
     conf.stsServer = isSettings.baseUrl;
-    conf.redirect_url = clientSettings.baseUrl + "/signin-oidc";
+    conf.redirect_url = clientSettings.baseUrl;
     conf.client_id = "salute-online-webapplication";
     conf.response_type = "id_token token";
     conf.scope = "openid profile salute_security_api offline_access";
     conf.post_logout_redirect_uri = clientSettings.baseUrl + "/signout-callback-oidc";
     conf.start_checksession = true;
     conf.silent_renew = true;
+    conf.silent_renew_offset_in_seconds = 20;
     conf.forbidden_route = "/forbidden";
     conf.unauthorized_route = "/unauthorized";
     conf.log_console_warning_active = true;
     conf.log_console_debug_active = false;
-    conf.max_id_token_iat_offset_allowed_in_seconds = 600;
+    conf.max_id_token_iat_offset_allowed_in_seconds = 20;
     conf.storage = localStorage;
 
     const endpoints = new AuthWellKnownEndpoints();

@@ -15,12 +15,13 @@ export class AuthenticationService {
     initialize() {
         this.oidcSecurityService.onAuthorizationResult.subscribe((result: AuthorizationResult) => {
              if (result !== AuthorizationResult.authorized) {
-                this.state.notifyDataChanged(this.state.events.global.logged, false);
-                if (window.parent) {
-                    window.parent.location.href = '/unauthorized';
-                } else {
-                    window.location.href = '/unauthorized';
-                }
+                this.oidcSecurityService.authorize();
+                // this.state.notifyDataChanged(this.state.events.global.logged, false);
+                // if (window.parent) {
+                //     window.parent.location.href = '/unauthorized';
+                // } else {
+                //     window.location.href = '/unauthorized';
+                // }
              }
         })
 

@@ -1,0 +1,29 @@
+<section class="dashboard container-fluid" style="height: 100vh">
+    <gridster [options]="gridOptions">
+            <gridster-item [item]="item" *ngFor="let item of dashboard">
+                <article *ngIf="item.widgetType === 1">
+                    <div class="draggable-header py-2">
+                        <h6 class="pl-3 mb-0">Clubs administrated</h6>
+                    </div>
+                    <div class="draggable-ignored p-2 noselect">
+                        <mat-card *ngFor="let club of myClubs" class="club-dashboard-card mb-3 draggable-ignore">
+                            <mat-card-header>
+                                <mat-card-title>{{club.clubTitle}}</mat-card-title>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row col-md-12 d-flex justify-content-between">
+                                    <circle-progress [title]="club.players" [subtitle]="'players'" class="club-statistic-circle">
+                                    </circle-progress>
+                                    <circle-progress [title]="club.membershipRequests" [subtitle]="'requests'" class="club-statistic-circle">
+                                    </circle-progress> 
+                                </div>
+                                <div class="row col-md-12 flex-row-reverse">
+                                    <button mat-raised-button color="primary">GO TO</button>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </article>
+            </gridster-item>
+        </gridster>
+</section>
