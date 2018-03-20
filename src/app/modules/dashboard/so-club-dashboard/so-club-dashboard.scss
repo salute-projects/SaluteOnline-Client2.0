@@ -1,0 +1,27 @@
+@import "../../../../theme/theme-variables";
+@import "../../../../theme/mixins";
+
+.club-dashboard {
+    position: relative;
+    margin-top: $default-margin;
+
+    gridster {
+        background: none;
+
+        article {
+            padding: 2px;
+        }
+    }
+}
+
+.draggable-header {
+    background-color: $main-red;
+    font-family: $font-family;
+    text-transform: uppercase;
+    cursor: move;
+    color: white;
+
+    &:hover {
+      background-color: $main-red-hover;  
+    }
+}

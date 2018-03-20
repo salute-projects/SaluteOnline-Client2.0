@@ -69,3 +69,9 @@ export enum WidgetType {
     MyClubs = 1,
     Other = 2
 }
+
+export enum ClubWidgetType {
+    None = 0,
+    MainStatistics = 1,
+    Other = 3
+}

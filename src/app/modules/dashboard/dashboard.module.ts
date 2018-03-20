@@ -6,6 +6,7 @@ import { DashboardRoutingModule } from './dashboard.routing.module';
 import { SoDashboard } from './so-dashboard/so-dashboard';
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { GridsterModule } from "angular-gridster2";
+import { SoClubDashboard } from './so-club-dashboard/so-club-dashboard';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { GridsterModule } from "angular-gridster2";
     GridsterModule
   ],
   declarations: [
-      SoDashboard
+      SoDashboard,
+      SoClubDashboard
   ],
   entryComponents: []
 })
