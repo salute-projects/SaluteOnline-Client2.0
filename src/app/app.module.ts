@@ -54,6 +54,7 @@ import { AdminClubsApi } from './services/context/adminClubs';
 import { AdminUsersApi } from './services/context/adminUsersApi';
 import { ClubStatisticApi } from './services/context/clubStatisticApi';
 import { ConfigurationApi } from './services/context/configurationApi';
+import { SigninModule } from './modules/signin/signin.module';
 
 @NgModule({
   imports: [
@@ -68,6 +69,7 @@ import { ConfigurationApi } from './services/context/configurationApi';
     AdminModule,
     MessagesModule,
     ProfileModule,
+    SigninModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -108,14 +110,17 @@ export class AppModule {
     conf.client_id = "salute-online-webapplication";
     conf.response_type = "id_token token";
     conf.scope = "openid profile salute_security_api offline_access";
-    conf.post_logout_redirect_uri = clientSettings.baseUrl + "/signout-callback-oidc";
+    conf.post_logout_redirect_uri = clientSettings.baseUrl + "/dashboard";
     conf.start_checksession = true;
     conf.silent_renew = true;
     conf.silent_renew_offset_in_seconds = 20;
+    conf.silent_renew_url = clientSettings.baseUrl + "/silent-renew";
+    //onf.trigger_authorization_result_event = true;
+    conf.post_login_route = "/dashboard";
     conf.forbidden_route = "/forbidden";
     conf.unauthorized_route = "/unauthorized";
     conf.log_console_warning_active = true;
-    conf.log_console_debug_active = false;
+    conf.log_console_debug_active = true;
     conf.max_id_token_iat_offset_allowed_in_seconds = 20;
     conf.storage = localStorage;
 

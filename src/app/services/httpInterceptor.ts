@@ -22,6 +22,8 @@ export class AuthInterceptor implements HttpInterceptor {
             if (token !== "") {
                 let tokenValue = "Bearer " + token;
                 return next.handle(req.clone({ setHeaders: { "Authorization" : tokenValue } }));
+            } else {
+                return next.handle(req);
             }
         } else {
             return next.handle(req);

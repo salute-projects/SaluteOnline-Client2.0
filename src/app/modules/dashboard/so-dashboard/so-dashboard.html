@@ -1,5 +1,5 @@
 <section class="dashboard container-fluid" style="height: 100vh">
-    <gridster [options]="gridOptions">
+    <gridster *ngIf="dashboard.length" [options]="gridOptions">
             <gridster-item [item]="item" *ngFor="let item of dashboard">
                 <article *ngIf="item.widgetType === 1">
                     <div class="draggable-header py-2">

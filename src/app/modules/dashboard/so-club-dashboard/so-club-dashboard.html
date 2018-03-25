@@ -1,6 +1,6 @@
 <section class="club-dashboard container-fluid" style="height: 100vh">
-    <gridster [options]="gridOptions">
-            <gridster-item [item]="item" *ngFor="let item of dashboard">
+    <gridster *ngIf="dashboard.length" [options]="gridOptions">
+            <gridster-item  [item]="item" *ngFor="let item of dashboard">
                 <article *ngIf="item.clubWidgetType === 1">
                     <div class="draggable-header py-2">
                         <h6 class="pl-3 mb-0">Main statistics</h6>

@@ -28,12 +28,14 @@ export class SoDashboard implements OnInit, OnDestroy {
 
     constructor(private readonly context: Context, private readonly snackService: SoSnackService, private readonly state: GlobalState,
         private readonly router: Router) {
-            this.context.clubStatisticsApi.getMyClubStatistic().subscribe(result => {
-                this.myClubs = result;
-            })
     }
 
     ngOnInit(): void {
+        debugger;
+        this.context.clubStatisticsApi.getMyClubStatistic().subscribe(result => {
+            this.myClubs = result;
+        })
+
         this.gridOptions = {
             compactType: CompactType.CompactLeftAndUp,
             fixedColWidth: 105,
@@ -59,7 +61,9 @@ export class SoDashboard implements OnInit, OnDestroy {
 
         this.context.configurationApi.getDashboardConfiguration().subscribe(result => {
             this.dashboard = result && result.panels && result.panels.length ? result.panels : defaultPanels;
-            this.gridOptions.api.optionsChanged();
+            if (this.gridOptions.api) {
+                this.gridOptions.api.optionsChanged();
+            }
         }, error => {
             this.dashboard = defaultPanels;
         })

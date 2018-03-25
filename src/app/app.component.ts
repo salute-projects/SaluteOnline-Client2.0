@@ -38,11 +38,11 @@ export class AppComponent implements OnInit, OnDestroy {
     log.debug('init');
 
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
-    this.authenticationService.initialize();
+    //this.authenticationService.initialize();
 
-    if (!window.location.pathname || window.location.pathname === '/') {
-      this.router.navigate(['/dashboard']);
-    }
+    // if (!window.location.pathname || window.location.pathname === '/') {
+    //   this.router.navigate(['/dashboard']);
+    // }
   }
 
   ngOnDestroy() {

@@ -20,5 +20,4 @@ export class Route {
       data: { reuse: true }
     }];
   }
-
 }
