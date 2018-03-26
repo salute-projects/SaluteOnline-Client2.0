@@ -46,9 +46,6 @@ export class GlobalState {
     }
 
     events = {
-        global: {
-            logged: 'global.logged'   
-        },
         menu: {
             isCollapsed: "menu.isCollapsed",
             activeLink: "menu.activeLink"

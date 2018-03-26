@@ -17,49 +17,14 @@ export class AuthenticationService implements OnDestroy {
             });
         }
 
-        this.oidcSecurityService.onAuthorizationResult.subscribe((result: AuthorizationResult) => {
-             if (result !== AuthorizationResult.authorized) {
-                debugger;
-                //this.oidcSecurityService.authorize();
-                // this.state.notifyDataChanged(this.state.events.global.logged, false);
-                // if (window.parent) {
-                //     window.parent.location.href = '/unauthorized';
-                // } else {
-                //     window.location.href = '/unauthorized';
-                // }
-             }
-        })
+        // this.oidcSecurityService.onAuthorizationResult.subscribe((result: AuthorizationResult) => {
+        //     do something after authorization
+        // })
     }
 
     ngOnDestroy(): void {
         this.oidcSecurityService.onModuleSetup.unsubscribe();
     }
-
-    // initialize() {
-    //     this.oidcSecurityService.onAuthorizationResult.subscribe((result: AuthorizationResult) => {
-    //         console.log(result);
-    //          if (result !== AuthorizationResult.authorized) {
-    //             debugger;
-    //             //this.oidcSecurityService.authorize();
-    //             // this.state.notifyDataChanged(this.state.events.global.logged, false);
-    //             // if (window.parent) {
-    //             //     window.parent.location.href = '/unauthorized';
-    //             // } else {
-    //             //     window.location.href = '/unauthorized';
-    //             // }
-    //          }
-    //     })
-
-    //     this.oidcSecurityService.startCheckingSilentRenew();
-
-    //     if (this.oidcSecurityService.moduleSetup) {
-    //         this.doCallbackLogicIfRequired();
-    //     } else {
-    //         this.oidcSecurityService.onModuleSetup.subscribe(() => {
-    //             this.doCallbackLogicIfRequired();
-    //         })
-    //     }
-    // }
 
     login() {
         this.oidcSecurityService.authorize();

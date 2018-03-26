@@ -28,17 +28,13 @@ export class SoHeader {
         private readonly sanitizer: DomSanitizer, private readonly context: Context, private readonly authenticationService: AuthenticationService ) {
         this.authenticationService.isAuthenticated().subscribe(result => {
             this.logged = result;
-            this.loadMessages();
+            if (result) {
+                this.loadMessages();
+            }
         })
         this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(localStorage.getItem('avatar') || '');
         this.state.subscribe(this.state.events.menu.isCollapsed, (isCollapsed: boolean) => {
             this.isMenuCollapsed = isCollapsed;
-        });
-        this.state.subscribe(this.state.events.global.logged, (logged: boolean) => {
-            this.logged = logged;
-            if (logged) {
-                this.loadMessages();
-            }
         });
         this.state.subscribe(this.state.events.user.avatarChanged, () => {
             const avatar = localStorage.getItem('avatar') || '';

@@ -115,7 +115,6 @@ export class AppModule {
     conf.silent_renew = true;
     conf.silent_renew_offset_in_seconds = 20;
     conf.silent_renew_url = clientSettings.baseUrl + "/silent-renew";
-    //onf.trigger_authorization_result_event = true;
     conf.post_login_route = "/dashboard";
     conf.forbidden_route = "/forbidden";
     conf.unauthorized_route = "/unauthorized";
